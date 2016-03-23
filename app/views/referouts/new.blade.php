@@ -11,20 +11,14 @@
 
 @section('content')
 
-<div class="row">
-        <div class="col-md-12">
-            <h1 class="name-header">
-                ข้อมูลส่งต่อ
-            </h1>
-        </div>
-    </div> 
+
      <!-- /. ROW  -->
   <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-<!--             <div class="panel-heading">
-                Basic Tabs
-            </div> -->
+    <div class="col-lg-10">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                ข้อมูลส่งต่อ
+            </div>
             <div class="panel-body">
                 <form action="" method="POST" class="form-horizontal">
                 <div class="row">
@@ -32,12 +26,11 @@
                         <div class="form-horizontal">
                             <fieldset>
 
-                              <!-- Form Name -->
-                              <legend>Data Forwarding</legend>
+
 
                               <!-- Text input-->
                               <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput">Date</label>
+                                <label class="col-xs-1 control-label">Date</label>
                                 <div class="col-xs-2">
                                   <input type="text" name="refer_date"
                                    class="form-control datepicker"
@@ -45,13 +38,25 @@
                                    value="{{\Carbon\Carbon::createFromFormat('Y-m-d',$refer->refer_date)->format('d-m-Y')}}">
                                 </div>
 
-                                <label class="col-xs-1 control-label" for="textinput">Time</label>
+                                <label class="col-xs-1 control-label">Time</label>
                                 <div class="col-xs-1">
                                   <input type="text" name="refer_time" class="form-control"
                                   value="{{$refer->refer_time}}">
                                 </div>
 
-                                <label class="col-xs-2 control-label" for="textinput">Refering Form</label>
+                                <label class="col-xs-2 control-label">Refering Form</label>
+                                <div class="col-xs-5">
+
+                                    <p class="form-control-static">
+                                        {{$refer_form}}
+                                        <input type="hidden" name="refer_from_hcode" value="{{$hcode}}"></input>
+                                    </p>
+
+                                </div>
+
+                              </div>
+                              <div class="form-group">
+                                <label class="col-xs-offset-5 col-xs-2 control-label">Refering To</label>
                                 <div class="col-xs-5">
 
                                     <select name="refer_hospcode" class="form-control select2">
@@ -63,37 +68,31 @@
 
                                 </div>
 
-
-
                               </div>
-                              <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput"></label>
-                                <div class="col-xs-2">
-                                    
-                                    <label class="control-label"><input type="radio" name="risk" id="inlineCheckbox1" value="option1"> Trauma
-                                    </label>
-
-                                    <label class="control-label"><input type="radio" name="risk" id="inlineCheckbox2" value="option1"> Non-Trauma  </label>                           
-                                </div>
-                                  
-                              </div>
+                              
 
                               <!-- Text input-->
-                              <legend>Patient information</legend>
+                                <hr/>
 
                               <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput">HN</label>
+                                <label class="col-xs-1 control-label">HN</label>
 
                                 <div class="col-xs-4">
-                                <select name="icd10" id="select2_patient" class="form-control"><option value="" selected="selected"></option>
+                                <select name="patient_id" id="select2_patient" class="form-control"><option value="" selected="selected"></option>
                                         </select>
-
                                 </div>
+                                <label class="col-xs-1 control-label">SEX</label>
+                                <label class="radio-inline">
+                                  <input type="radio" name="sex" value="1"> ชาย
+                                </label>
+                                <label class="radio-inline">
+                                  <input type="radio" name="sex" value="2"> หญิง
+                                </label>
                               </div>
-                              <hr/>
+                              
 
                               <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput">PREFIX</label>
+                                <label class="col-xs-1 control-label">PREFIX</label>
                                 <div class="col-xs-2">
                                   <select id="pname" name="pname" class="form-control">
                                     @foreach($pnames as $pname)
@@ -103,47 +102,96 @@
                                   </select>
                                 </div>
 
-                                <label class="col-xs-1 control-label" for="textinput">FIRSTNAME</label>
-                                <div class="col-xs-2">
+                                <label class="col-xs-1 control-label">F.NAME</label>
+                                <div class="col-xs-3">
                                   <input type="text" id="fname" name="fname" class="form-control"
                                   {{$patient->fname}}>
                                 </div>
 
-                                <label class="col-xs-1 control-label" for="textinput">LASTNAME</label>
-                                <div class="col-xs-2">
+                                <label class="col-xs-1 control-label">L.NAME</label>
+                                <div class="col-xs-3">
                                   <input type="text" id="lname" name="lname" class="form-control"
                                   value="{{$patient->lname}}">
                                 </div>
 
-                                <label class="col-xs-1 control-label" for="textinput">BIRTH</label>
-                                <div class="col-xs-2">
-                                  <input type="text" id="birthdate" name="birthdate" class="form-control datepicker"
-                                  value="{{$patient->birthdate}}">
-                                </div>
+                                
 
                               </div>
-
-                              <!-- Text input-->
                               <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput">ICD10</label>
+                                  <label class="col-xs-1 control-label">BIRTH</label>
+                                    <div class="col-xs-2">
+                                      <input type="text" id="birthdate" name="birthdate" class="form-control datepicker"
+                                      value="{{$patient->birthdate}}">
+                                    </div>
+                              </div>
+
+                              <hr/>
+                              <!-- Text input-->
+                            <div class="row">
+                                    
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+
+                                    <label class="col-xs-2 control-label">ICD10</label>
+                                    <div class="col-xs-10">
+                                    <select name="icd10[]" id="select2_diag" class="form-control" multiple="" ></select>
+                                    </div>
+
+                                    </div>
+                                    <div class="form-group">
+
+                                    <label class="col-xs-2 control-label">Diagnosis Text.</label>
+                                    <div class="col-xs-10">
+                                    <textarea name="diag_text" class="form-control" rows="3"></textarea>
+                                    </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+
+                                    <label class="col-xs-2 control-label">ICD9</label>
+                                    <div class="col-xs-10">
+                                    <select name="icd9[]" id="select2_op" class="form-control select2" multiple="" ></select>
+                                    </div>
+
+                                    </div>
+                                    <div class="form-group">
+
+                                    <label class="col-xs-2 control-label">Operation</label>
+                                    <div class="col-xs-10">
+                                    <textarea name="op_text" class="form-control" rows="3"></textarea>
+                                    </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr/>
+                              <div class="form-group">
+                                <label class="col-xs-1 control-label"></label>
+                                <div class="col-xs-11">
+                                    
+                                    <label class="control-label"><input type="radio" name="risk"  value="1"> Trauma
+                                    </label>
+
+                                    <label class="control-label"><input type="radio" name="risk" 
+                                    value="0"> Non-Trauma  </label>                           
+                                </div>
+                                  
+                              </div>
+
+                              <div class="form-group">
+                                <label class="col-xs-1 control-label">Cause</label>
                                 <div class="col-xs-5">
-                                
-                                    <select name="icd10[]" id="select2_diag" class="form-control" multiple="" >
+                                  <select name="rfrcs" class="form-control select2">
+                                    <option value="">--</option>
+                                    @foreach($rfrcs as $r)
+
+                                    <option value="{{$r->rfrcs}}">{{$r->name}}</option>
+                                    @endforeach
 
                                     </select>
-                     
-                                </div>
-
-                                <label class="col-xs-1 control-label" for="textinput">Diagnosis Text.</label>
-                                <div class="col-xs-5">
-                                  <input type="text" placeholder="Diag Text" class="form-control">
-                                </div>
-                              </div>
-
-                              <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput">Cause</label>
-                                <div class="col-xs-5">
-                                  <input type="text" placeholder="Post Code" class="form-control">
                                 </div>
                               </div>
 
@@ -151,14 +199,28 @@
 
                               <!-- Text input-->
                               <div class="form-group">
-                                <label class="col-xs-1 control-label" for="textinput">Doctor</label>
+                                <label class="col-xs-1 control-label">Doctor</label>
                                 <div class="col-xs-5">
-                                  <input type="text" placeholder="Country" class="form-control">
+                                  <select name="doctor" class="form-control select2">
+                                    <option value="">--</option>
+                                    @foreach($doctor as $d)
+
+                                    <option value="{{$d->code}}">{{$d->name}}</option>
+                                    @endforeach
+
+                                    </select>
                                 </div>
 
-                                <label class="col-xs-1 control-label" for="textinput">Adm Ward</label>
+                                <label class="col-xs-2 control-label">Adm Ward</label>
                                 <div class="col-xs-2">
-                                  <input type="text" placeholder="Country" class="form-control">
+                                  <select name="ward" class="form-control select2">
+                                    <option value="">--</option>
+                                    @foreach($ward as $w)
+
+                                    <option value="{{$w->ward}}">{{$w->name}}</option>
+                                    @endforeach
+
+                                  </select>
                                 </div>
                               </div>
 
@@ -241,11 +303,109 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade active in" id="home">
+                            <div class="tab-pane fade active in" id="patient_info">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                    <h4></h4>
+<form class="form-horizontal">
+    <div class="form-group">
+    <label class="col-sm-2 control-label">หมู่เลือด</label>
+    <div class="col-sm-2">
+      <select name="bloodgpr" class="form-control select2">
+        <option value="">--</option>
+        @foreach($bloodgpr as $b)
+
+        <option value="{{$b->blood_id}}">{{$b->name}}</option>
+        @endforeach
+
+        </select>
+    </div>
+  </div>
+  <hr/>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">บ้าน</label>
+    <div class="col-sm-4">
+      <input type="text" name="tmppart_text" value="{{$address->tmppart_text}}" class="form-control" >
+    </div>
+
+    <label class="col-sm-1 control-label">เมือง</label>
+    <div class="col-sm-2">
+      <input type="text" name="amppart_text" value="{{$address->amppart_text}}" class="form-control" >
+    </div>
+
+    <label class="col-sm-1 control-label">แขวง</label>
+    <div class="col-sm-2">
+      <input type="text" name="chwpart_text" value="{{$address->chwpart_text}}" class="form-control" >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">เบอรโทร</label>
+    <div class="col-sm-4">
+      <input type="text" name="tel" value="{{$patient->tel}}" class="form-control" >
+    </div>
+    <label class="col-sm-1 control-label">สัญชาติ</label>
+    <div class="col-sm-2">
+        <select name="nationality" class="form-control select2">
+        <option value="">--</option>
+        @foreach($nationality as $n)
+
+        <option value="{{$n->nationality}}">{{$n->name}}</option>
+        @endforeach
+
+        </select>
+    </div>
+    <label class="col-sm-1 control-label">ศาสนา</label>
+    <div class="col-sm-2">
+      <select name="religion" class="form-control select2">
+        <option value="">--</option>
+        @foreach($religion as $r)
+
+        <option value="{{$r->religion}}">{{$r->name}}</option>
+        @endforeach
+
+        </select>
+    </div>
+
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">สถานะภาพ</label>
+    <div class="col-sm-2">
+     <select name="marrystatus" class="form-control select2">
+        <option value="">--</option>
+        @foreach($marrystatus as $r)
+
+        <option value="{{$r->marrystatus_id}}">{{$r->marrystatus_name}}</option>
+        @endforeach
+
+        </select>
+    </div>
+    <label class="col-sm-1 control-label">อาชีพ</label>
+    <div class="col-sm-2">
+     <select name="occupation" class="form-control select2">
+        <option value="">--</option>
+        @foreach($occupation as $o)
+
+        <option value="{{$o->occupation}}">{{$o->name}}</option>
+        @endforeach
+
+        </select>
+    </div>
+
+
+  </div>
+
+</form>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="home">
                                 <h4></h4>
                                 <div class="form-horizontal">
                                     <fieldset>
-                                        <textarea class="form-control" rows="5"></textarea>
+                                        <textarea name="admit_cc_text" class="form-control" rows="5"></textarea>
                                     </fieldset>
                                 </div>
                             </div>
@@ -253,13 +413,13 @@
                             <div class="tab-pane fade" id="profile">
                                 <h4></h4>
                                 <div class="table-responsive">
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    <textarea class="form-control" name="treat_current_text" rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="messages">
                                 <h4></h4>
                                 <div class="table-responsive">
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    <textarea class="form-control" name="treat_pass_text" rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="settings">
@@ -447,7 +607,7 @@
             }
 
         function formatRepoSelection (repo) {
-          return repo.id || repo.text;
+          return (repo.id != "" ? (repo.id + " : "+ repo.full_name):"") || repo.text;
         }
 
         function formatRepoSelectionDiag (repo) {

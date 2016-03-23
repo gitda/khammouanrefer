@@ -80,6 +80,17 @@
                 <i class="fa fa-fw fa-user"></i> {{trans('nav.menu_administrator')}}</a>
             </li>
         </ul>
+         <ul class="nav nav-menu" id="main-menu">
+
+            <li>
+                <a href="#time">
+                <p>
+                <i class="fa fa-clock-o"></i> Time : {{number_format((microtime(true) - LARAVEL_START), 4)}}s<br/>
+                </p></a>
+
+            </li>
+            </ul>
+
 
     </div>
 

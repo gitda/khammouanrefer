@@ -245,6 +245,7 @@
         </nav>
         <!--/. NAV TOP  -->
         @include('templates.menu')
+
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
@@ -252,7 +253,9 @@
                 @yield('content')
                 
                 <!-- /. ROW  -->
-				<footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+				<footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p>
+                
+                </footer>
             </div>
             <!-- /. PAGE INNER  -->
         </div>

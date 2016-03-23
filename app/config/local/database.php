@@ -20,28 +20,28 @@ return array(
 
 	'connections' => array(
 
-		// 'mysql' => array(
-		// 	'driver'    => 'mysql',
-		// 	'host'      => 'localhost',
-		// 	'database'  => 'db_tll',
-		// 	'username'  => 'sa',
-		// 	'password'  => 'sa',
-		// 	'port'		=> '3307',
-		// 	'charset'   => 'utf8',
-		// 	'collation' => 'utf8_unicode_ci',
-		// 	'prefix'    => '',
-		// ),
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => '192.168.99.9',
+			'host'      => 'localhost',
 			'database'  => 'db_tll',
-			'username'  => '13baht',
-			'password'  => 'adminpass',
-			'port'		=> '3396',
+			'username'  => 'sa',
+			'password'  => 'sa',
+			'port'		=> '3307',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
+		// 'mysql' => array(
+		// 	'driver'    => 'mysql',
+		// 	'host'      => '192.168.99.9',
+		// 	'database'  => 'db_tll',
+		// 	'username'  => '13baht',
+		// 	'password'  => 'adminpass',
+		// 	'port'		=> '3396',
+		// 	'charset'   => 'utf8',
+		// 	'collation' => 'utf8_unicode_ci',
+		// 	'prefix'    => '',
+		// ),
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

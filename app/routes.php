@@ -11,30 +11,39 @@
 |
 */
 
-Route::get('/', function(){
-	return Redirect::to('home');
-});
 
-Route::controller('home', 'HomeController');
-
-Route::controller('patient', 'PatientController');
-Route::controller('referout', 'ReferoutController');
-Route::controller('immigration', 'ImmigrationController');
-Route::controller('search', 'SearchController');
-
-Route::get('referin', function(){
-	return View::make('referins.index');
-});
 
 Route::controller('auth', 'Auth\AuthController');
 
-Route::group(['prefix'=>'administrator'], function(){
 
-	Route::get('/', 'Administrators\AdministratorController@index');
+Route::group(['before' => 'sentry'],function(){
 
-	Route::controller('user', 	'Administrators\UserController');
-	Route::controller('doctor', 'Administrators\DoctorController');
-	Route::controller('ward', 	'Administrators\WardController');
-	Route::controller('rfrcs', 	'Administrators\ReferCauseController');
-	// Route::controller('prefix', 'Administrators\PrefixController');
+	Route::get('/', function(){
+		return Redirect::to('home');
+	});
+	Route::controller('home', 'HomeController');
+
+	Route::controller('patient', 'PatientController');
+	Route::controller('referout', 'ReferoutController');
+	Route::controller('immigration', 'ImmigrationController');
+	Route::controller('search', 'SearchController');
+
+	Route::get('referin', function(){
+		return View::make('referins.index');
+	});
+
+
+
+	Route::group(['prefix'=>'administrator'], function(){
+
+		Route::get('/', 'Administrators\AdministratorController@index');
+
+		Route::controller('user', 	'Administrators\UserController');
+		Route::controller('doctor', 'Administrators\DoctorController');
+		Route::controller('ward', 	'Administrators\WardController');
+		Route::controller('rfrcs', 	'Administrators\ReferCauseController');
+		// Route::controller('prefix', 'Administrators\PrefixController');
+	});
+
+
 });

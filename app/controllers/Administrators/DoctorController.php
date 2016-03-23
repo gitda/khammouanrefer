@@ -8,21 +8,37 @@ use Input;
 use Doctor;
 use Crypt;
 use Redirect;
+use Sentry;
 
 class DoctorController extends \BaseController
 {
 	public function getIndex()
     {
+        $user = Sentry::getUser();
+
     	$doctor  = Doctor::leftJoin('hospcode','hospcode.hospcode','=','doctor.hospcode')
-    				->select('doctor.*','hospcode.name as hospname')
-    				->get();
+    				->select('doctor.*','hospcode.name as hospname');
+
+        if (!$user->hasAccess("admin"))
+        {
+            $doctor->where('doctor.hospcode','=',$user->hospcode);
+        }
+
+    	$doctor = $doctor->get();
     	return View::make('administrators.doctor.index')
     				->with(compact('doctor'));
     }
 
     public function getNew($code = null)
     {
+        $user = Sentry::getUser();
+
     	$hospcode = Hospcode::all();
+        if (!$user->hasAccess("admin"))
+        {
+            $hospcode = Hospcode::where('hospcode','=',$user->hospcode)->get();
+        }
+
     	$doctor = new Doctor;
     	if($code!=null)
     	{

@@ -10,4 +10,12 @@ class Ward extends Eloquent {
 	public $timestamps = false;
 
 
+	public function scopeActive($query)
+	{
+		return $query->where('active','=','Y');
+	}
+	public function scopeHospcode($query, $hospcode)
+	{
+		return $query->where('hospcode','=', $hospcode);
+	}
 }
