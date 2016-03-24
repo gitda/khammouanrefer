@@ -4,16 +4,14 @@
 
 class PatientAddress extends Eloquent {
 
-
-	use UuidForKey;
 	
-	protected $primaryKey = "refer_uuid";
+	protected $primaryKey = "patient_id";
 
 	protected $table = 'patient_address';
 
 	public $timestamps = false;
 
-
+	public $fillable = ['patient_id'];
 
 
 }

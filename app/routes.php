@@ -25,13 +25,9 @@ Route::group(['before' => 'sentry'],function(){
 
 	Route::controller('patient', 'PatientController');
 	Route::controller('referout', 'ReferoutController');
+	Route::controller('referin', 'ReferinController');
 	Route::controller('immigration', 'ImmigrationController');
 	Route::controller('search', 'SearchController');
-
-	Route::get('referin', function(){
-		return View::make('referins.index');
-	});
-
 
 
 	Route::group(['prefix'=>'administrator'], function(){

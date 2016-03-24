@@ -25,17 +25,35 @@
                     <div class="col-lg-12">
                       <table id="datatable" class="table table-bordered">
                         <thead>
-                          <tr>
-                            <th>Name</th>
-                            <th>Hospital</th>
+                          <tr class="bg-info">
+                            <th width="140" class="text-center">Date</th>
+                            <th width="100" class="text-center">Time</th>
                             
-                            <th>Group</th>
-                            <th width="100">Actived</th>
-                            <th width="100">edit</th>
+                            <th width="220">Name</th>
+                            <th>From</th>
+                            <th width="100">Gate1</th>
+                            <th width="100">Gate2</th>
+                            <th width="100">Hospital</th>
+                            <th width="100">Status</th>
+                            <th width="50">edit</th>
                           </tr>
                         </thead>
                         <tbody>
-
+                        @foreach($referlist as $refer)
+                        <tr
+                        @if($refer->is_read==0){{'class="bg-danger"'}}@endif
+                        >
+                          <td class="text-center">{{$refer->refer_date}}</td>
+                          <td class="text-center">{{$refer->refer_time}}</td>
+                          <td>{{$refer->pname.$refer->fname." ".$refer->lname}}</td>
+                          <td>{{$refer->refer_hospcode}}</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td><a href="{{url('referout/edit/'.Crypt::encrypt($refer->refer_uuid))}}" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a></td>
+                        </tr>
+                        @endforeach
                         </tbody>
                       </table>
                     </div>

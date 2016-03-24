@@ -12,7 +12,7 @@ return array(
 	| you want to customize your views to better match your application.
 	|
 	*/
-	'submit' => 'New Patient',
+	'submit' => 'Save',
 	'new_patient' => 'New Patient',
 	'search_diag' => 'Search ICD10',
 

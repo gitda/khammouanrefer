@@ -12,6 +12,7 @@ class Refer extends Eloquent {
 
 	public $timestamps = false;
 
+	public $fillable = ['refer_uuid'];
 
 
 }

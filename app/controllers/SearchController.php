@@ -5,12 +5,19 @@ class SearchController extends BaseController
 {
 	public function getPatient()
     {
+        $hospcode = Sentry::getUser()->hospcode;
     	$search = Input::get('q');
 
-    	$items = Patient::where(DB::raw('concat(fname," ",lname)'),'like','%'.$search.'%')
-    			->orWhere('cid','like','%'.$search.'%')
-    			->orWhere('hn','like','%'.$search.'%')
-				->select('id','sex','hn','cid',DB::raw('concat(fname," ",lname) as full_name'),'addrpart as address','patient_image as image')->take(10)->get();
+    	$items = Patient::leftJoin('patient_hn', function($join) use ($hospcode)
+                {
+                    $join->on('patient_hn.patient_id', '=', 'patient.id')
+                    ->where('patient_hn.hospcode', '=', $hospcode);
+                })
+                ->where(DB::raw('concat(patient.fname," ",patient.lname)'),'like','%'.$search.'%')
+    			->orWhere('patient.cid','like','%'.$search.'%')
+    			->orWhere('patient.hn','like','%'.$search.'%')
+                ->orWhere('patient_hn.hn','like','%'.$search.'%')
+				->select('patient.id','patient.sex','patient.hn','patient_hn.hn as patient_hn','patient.cid',DB::raw('concat(patient.fname," ",patient.lname) as full_name'),'patient.addrpart as address','patient.patient_image as image')->take(10)->get();
 
 
     	$result = array('total_count'=>0,'items'=>$items);
@@ -70,9 +77,34 @@ class SearchController extends BaseController
     	return json_encode($result);
     }
 
+    public function getIcd9()
+    {
+        $search = Input::get('q');
+        $items = Icd9cm1::where('code','like', $search.'%')
+                        ->orWhere('name','like', '%'.$search.'%')
+                        ->select('code as id','name')
+                        ->orderBy('name','asc')
+                        ->take(50)->get();
+
+
+        $result = array('total_count'=>0,'items'=>$items);
+        return json_encode($result);
+    }
+
     public function getPatientDetail($id)
     {
+        $hospcode = Sentry::getUser()->hospcode;
+
     	$patient = Patient::find($id);
-    	return $patient;
+
+        $provis_code = Pname::where('name','=',$patient->pname)->first()->provis_code;
+
+        $patient->pname = $provis_code;
+        $patient->hn    = PatientHn::firstOrNew(['hospcode'=>$hospcode,
+                                    'patient_id'=>$patient->id])->hn;
+
+        $address = PatientAddress::find($patient->id);
+
+    	return compact('patient','address');
     }
 }
